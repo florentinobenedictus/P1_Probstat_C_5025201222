@@ -20,6 +20,6 @@ soal_5b(10000,3)
 soal_5c<-function(lambda){
   rataan=1/lambda
   varian=1/(lambda^2)
-  cat("3D. Rataan:",rataan,", dan varian:",varian,"\n")
+  cat("5C. Rataan:",rataan,", dan varian:",varian,"\n")
 }
 soal_5c(3)
