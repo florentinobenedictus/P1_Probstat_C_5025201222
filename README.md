@@ -25,11 +25,12 @@ soal_1b<-function(rnd,p,x){
 }
 soal_1b(10000,0.2,3)
 ```
-![1B](Screenshot/Gambar1B.png)
+![1B](Screenshot/Gambar1B.png)<br>
+Ada fungsi random sehingga hasil 1B tiap kali dirun akan berbeda kecuali menggunakan seed yang sama
 ### 1C.
 Bandingkan Hasil poin a dan b , apa kesimpulan yang bisa didapatkan?<br>
 #### Jawaban 1C:
-Nilai hasil 1A dan 1B tidak jauh berbeda meskipun nilai 1B sedikit berubah-ubah akibat adanya faktor random
+**Nilai hasil 1A dan 1B tidak jauh berbeda meskipun nilai 1B sedikit berubah-ubah akibat adanya faktor random**
 ### 1D.
 Histogram Distribusi Geometrik , Peluang X = 3 gagal Sebelum Sukses Pertama<br>
 ```r
@@ -135,7 +136,7 @@ soal_3b(6, 4.5)
 ### 3C.
 dan bandingkan hasil poin a dan b , Apa kesimpulan yang bisa didapatkan<br>
 #### Jawaban 3C:
-Nilai peluang dengan distribusi poisson hanya bergantung pada nilai x dan mean sehingga tidak bergantung waktu dan peluang dalam satu tahun akan bernilai sama
+**Nilai peluang dengan distribusi poisson hanya bergantung pada nilai x dan mean sehingga tidak bergantung waktu dan peluang dalam satu tahun akan bernilai sama**
 ### 3D.
 Nilai Rataan (μ) dan Varian (σ²) dari Distribusi  Poisson.<br>
 ```r
@@ -193,10 +194,57 @@ Petunjuk: <br>
  ●  Gunakan fungsi bawaan R <br>
 ### 5A.
 Fungsi Probabilitas dari Distribusi Exponensial<br>
+```r
+#5A
+soal_5a<-function(x,lambda){
+  #Nilai x dapat diganti karena belum ada di soal
+  dexp(x,rate=lambda)
+}
+soal_5a(5,3)
+```
+![5A](Screenshot/Gambar5A.jpg)<br>
+Nilai x dapat diganti karena belum ditentukan di soal, hasil dexp adalah λe^(−λx)
 ### 5B.
 Histogram dari Distribusi Exponensial untuk 10, 100, 1000 dan 10000 bilangan random <br>
+```r
+#5B
+soal_5b<-function(x,lambda){
+  set.seed(1)
+  hist(rexp(x,rate=lambda))
+}
+```
+```r
+soal_5b(10,3)
+```
+- Gambar 10 bilangan random<br>
+![5B1](Screenshot/Gambar5BPart1.jpg)<br>
+```r
+soal_5b(100,3)
+```
+- Gambar 100 bilangan random<br>
+![5B2](Screenshot/Gambar5BPart2.png)<br>
+```r
+soal_5b(1000,3)
+```
+- Gambar 1000 bilangan random<br>
+![5B3](Screenshot/Gambar5BPart3.jpg)<br>
+```r
+soal_5b(10000,3)
+```
+- Gambar 10000 bilangan random<br>
+![5B4](Screenshot/Gambar5BPart4.png)<br>
 ### 5C.
 Nilai Rataan (μ) dan Varian (σ²) dari Distribusi  Exponensial untuk n = 100 dan λ = 3<br>
+```r
+#5C
+soal_5c<-function(lambda){
+  rataan=1/lambda
+  varian=1/(lambda^2)
+  cat("5C. Rataan:",rataan,", dan varian:",varian,"\n")
+}
+soal_5c(3)
+```
+![5C](Screenshot/Gambar5C.png)<br>
 
 ## Soal No. 6
 Diketahui generate random nilai sebanyak 100 data, mean = 50, sd = 8. Tentukan<br>
@@ -211,10 +259,52 @@ Fungsi Probabilitas dari Distribusi Normal P(X1 ≤ x ≤ X2), hitung Z- Score N
  rata- rata = 5.083333<br>
  X1 = 5<br>
  X2 = 6 <br>
+```r
+#6a
+soal_6a<-function(n, mean, sd){
+  #set.seed(1)
+  nums<-rnorm(n,mean,sd)
+  X1=-2147483647
+  X2=2147483647
+  z_scores <- (nums-mean(nums))/sd(nums)
+  rata_rata=mean(nums)
+  for(i in 1:n){
+    #Cari nilai X1 & X2
+    if(nums[i]>X1 && nums[i]<rata_rata)X1=nums[i]
+    if(nums[i]<X2 && nums[i]>rata_rata)X2=nums[i]
+  }
+  P_ans=pnorm(X2,mean(nums),sd(nums),lower.tail=TRUE)-pnorm(X1,mean(nums),sd(nums),lower.tail=TRUE)
+  cat("Peluang dari",X1,"< x <",X2,"adalah:",P_ans)
+  plot(nums,z_scores,ylab="Z-score",xlab="Data Nilai")
+}
+soal_6a(100, 50, 8)
+```
+![6A1](Screenshot/Gambar6APart1.png)<br>
+![6A2](Screenshot/Gambar6APart2.png)<br>
+Dalam soal ini pertama akan mengisi vector `nums` dengan `rnorm`, selanjutnya mengisi vector `z_scores` dengan nilai Z dari masing-masing value di `nums`.<br>
+Selanjutnya akan dicari nilai `X1` dan `X2`, yaitu nilai terdekat dengan rata-rata dengan X1<μ dan X2>μ. Lalu akan dicari distribusi Probabilitas dari area yang berada diantara kedua nilai tersebut. Nilai Probabilitas akan ditampilkan pada console. Terakhir akan diplot grafik dengan value random yang tergenerate pada sumbu x dan nilai Z masing-masing value tersebut pada sumbu y.
 ### 6B.
 Generate Histogram dari Distribusi Normal dengan breaks 50 dan format penamaan:<br>
  NRP_Nama_Probstat_{Nama Ke las}_DNhistogram<br>
  Contoh :<br>
  312312312_Rola_Probstat_A_DNhistogram <br>
+```r
+#6b
+soal_6b<-function(n, mean, sd){
+  nums=rnorm(n,mean,sd)
+  hist(nums,breaks=50,main="5025201222_Florentino Benedictus_Probstat_C_DNHistogram")
+}
+soal_6b(100, 50, 8)
+```
+![6B](Screenshot/Gambar6B.png)<br>
 ### 6C.
 Nilai Varian (σ²) dari hasil generate random nilai  Distribusi Normal.<br>
+```r
+#6c
+soal_6c<-function(n, mean, sd){
+  varian=sd^2
+  cat("6C. Varian:",varian,"\n")
+}
+soal_6c(100, 50, 8)
+```
+![6C](Screenshot/Gambar6C.png)<br>
